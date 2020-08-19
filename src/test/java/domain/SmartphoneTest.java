@@ -9,17 +9,23 @@ class SmartphoneTest {
     Smartphone smartphone1 = new Smartphone(5, "Apple", 1500, "Apple Inc");
 
     @Test
-    void ShouldMatchesByManufacturer() {
+    void shouldMatchesByManufacturer() {
         String search = "Microsoft";
-        Boolean actual =  smartphone.matches(search);
-        assertEquals(true,actual);
+        assertTrue(smartphone.matches(search));
     }
 
     @Test
-    void ShouldMatchesByName() {
+    void shouldMatchesByName() {
         String search = "Apple";
-        Boolean actual = smartphone1.matches(search);
-        assertEquals(true,actual);
+        assertTrue(smartphone1.matches(search));
 
     }
+
+    @Test
+    void shouldNoMatches() {
+        String search = "Sony";
+        assertFalse(smartphone1.matches(search));
+
+    }
+
 }

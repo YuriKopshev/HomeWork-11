@@ -24,20 +24,16 @@ class ProductManagerTest {
     private ProductManager manager;
     Book book = new Book(2, "Война и Мир", 200, "Толстой");
     Book book1 = new Book(3, "Код Да Винчи", 250, "Дэн Браун");
+    Book book2 = new Book(3, "Инферно", 250, "Дэн Браун");
+    Book book3 = new Book(3, "Инферно", 250, "Рейнард Сильвейн");
     Smartphone smartphone = new Smartphone(3, "Nokia", 1000, "Microsoft");
     Smartphone smartphone1 = new Smartphone(5, "Apple", 1500, "Apple Inc");
 
-    @BeforeEach
-    public void setUp() {
-        manager.add(book);
-        manager.add(book1);
-        manager.add(smartphone);
-        manager.add(smartphone1);
-    }
+
 
 
     @Test
-    void ShouldSearchSmartphoneByName() {
+    void shouldSearchSmartphoneByName() {
         String text = "Nokia";
         Product[] returned = new Product[]{smartphone};
         doReturn(returned).when(repository).findAll();
@@ -48,7 +44,7 @@ class ProductManagerTest {
     }
 
     @Test
-    void ShouldSearchSmartphoneByManufacturer() {
+    void shouldSearchSmartphoneByManufacturer() {
         String text = "Apple Inc";
         Product[] returned = new Product[]{smartphone1};
         doReturn(returned).when(repository).findAll();
@@ -59,7 +55,7 @@ class ProductManagerTest {
     }
 
     @Test
-    void ShouldSearchBookByAuthor() {
+    void shouldSearchBookByAuthor() {
         String text = "Толстой";
         Product[] returned = new Product[]{book};
         doReturn(returned).when(repository).findAll();
@@ -67,10 +63,35 @@ class ProductManagerTest {
         Product[] expected = new Product[]{book};
         Product[] actual = manager.searchBy(text);
         assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    void shouldSearchBookBySameAuthor() {
+        String text = "Дэн Браун";
+        Product[] returned = new Product[]{book1,book2};
+        doReturn(returned).when(repository).findAll();
+
+        Product[] expected = new Product[]{book1,book2};
+        Product[] actual = manager.searchBy(text);
+        assertArrayEquals(expected, actual);
 
     }
+
     @Test
-    void ShouldSearchBookByName() {
+    void shouldSearchBookBySameName() {
+        String text = "Инферно";
+        Product[] returned = new Product[]{book2,book3};
+        doReturn(returned).when(repository).findAll();
+
+        Product[] expected = new Product[]{book2,book3};
+        Product[] actual = manager.searchBy(text);
+        assertArrayEquals(expected, actual);
+
+    }
+
+
+    @Test
+    void shouldSearchBookByName() {
         String text = "Код Да Винчи";
         Product[] returned = new Product[]{book1};
         doReturn(returned).when(repository).findAll();
@@ -81,7 +102,7 @@ class ProductManagerTest {
 
     }
     @Test
-    void ShouldSearchNoObject() {
+    void shouldSearchNoObject() {
         String text = "Доктор Живаго";
         Product[] returned = new Product[0];
         doReturn(returned).when(repository).findAll();

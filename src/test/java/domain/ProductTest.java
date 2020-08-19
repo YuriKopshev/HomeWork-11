@@ -8,9 +8,16 @@ class ProductTest {
     Product product = new Product(1, "DVD", 80);
 
     @Test
-    void ShouldMatchesByName() {
+    void shouldMatchesByName() {
         String search = "DVD";
-        assertEquals(true, product.matches(search));
+        assertTrue(product.matches(search));
+    }
+    @Test
+    void shouldNotMatchesByName() {
+        String search = "Video";
+        assertFalse(product.matches(search));
 
     }
+
+
 }

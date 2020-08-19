@@ -14,17 +14,20 @@ class BookTest {
 
 
     @Test
-    void ShouldMatchesByAuthor() {
+    void shouldMatchesByAuthor() {
       String search = "Толстой";
-      Boolean actual =  book.matches(search);
-      assertEquals(true,actual);
+      assertTrue(book.matches(search));
     }
 
     @Test
-    void ShouldMatchesByName() {
+    void shouldMatchesByName() {
         String search = "Код Да Винчи";
-        Boolean actual = book1.matches(search);
-        assertEquals(true,actual);
+        assertTrue(book1.matches(search));
+    }
+    @Test
+    void shouldNoMatches() {
+        String search = "Братья Карамазовы";
+        assertFalse(book1.matches(search));
 
     }
 }
